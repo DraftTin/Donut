@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"math"
-	"math/rand"
 	"time"
 )
 
@@ -17,9 +16,9 @@ var K1 float64 = 40
 var zBuffer [160 * 44]float64
 var buffer [160 * 44]rune
 
-var backgroundASCIICode rune = '.'
+var backgroundASCIICode rune = ' '
 
-var incrementSpeed float64 = 0.1
+var incrementSpeed float64 = 0.2
 
 func calculateX(i float64, j float64, k float64) float64 {
 	return j*math.Sin(A)*math.Sin(B)*math.Cos(C) - k*math.Cos(A)*math.Sin(B)*math.Cos(C) +
@@ -65,8 +64,6 @@ func main() {
 	R = 20
 	r = 10
 	horizontalOffset = 10
-	// 定义字符集
-	characters := []rune{'#', '@', '*', '~', ';', '+'}
 
 	for {
 		refresh()
@@ -75,9 +72,7 @@ func main() {
 				donutX := (R + r*math.Cos(theta)) * math.Cos(sigma)
 				donutY := (R + r*math.Cos(theta)) * math.Sin(sigma)
 				donutZ := r * math.Sin(theta)
-				randomIndex := rand.Intn(len(characters))
-				randomCharacter := characters[randomIndex]
-				calculateForSurface(donutX, donutY, donutZ, randomCharacter)
+				calculateForSurface(donutX, donutY, donutZ, '+')
 			}
 		}
 		w, h := int(width), int(height)
